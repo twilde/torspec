@@ -327,6 +327,15 @@ with regard to key security properties.
 
 The implementer should increase the 1024 bit RSA modulus to 2048 bits.
 
+SSL Session ID
+
+Currently we do not send an SSL session ID, as we do not support session
+resumption.  However, Apache (and likely other major SSL servers) do have
+this support, and do send a 32 byte SSLv3/TLSv1 session ID in their Server
+Hello cleartext.  We should do the same to avoid an easy fingerprinting
+opportunity.  It may be necessary to lie to OpenSSL to claim that we are
+tracking session IDs to cause it to generate them for us.
+
 Possible future filtering nightmares
 
 At some point it may cost effective or politically feasible for a network
